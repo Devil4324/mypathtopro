@@ -289,4 +289,8 @@ ${latest.lesson}
 
 }
 
-console.log(supabase);
+if(typeof supabase !== "undefined"){
+    alert("Supabase Connected");
+}else{
+    alert("Supabase Not Found");
+}
