@@ -288,3 +288,5 @@ ${latest.lesson}
 `;
 
 }
+
+console.log(supabase);
