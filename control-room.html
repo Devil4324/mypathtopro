@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Control Room</title>
+
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+.hidden{
+display:none;
+}
+
+.control-wrapper{
+
+max-width:1200px;
+
+margin:auto;
+
+padding:40px 20px;
+
+}
+
+.page-title{
+
+font-size:3rem;
+
+margin-bottom:10px;
+
+}
+
+.page-subtitle{
+
+color:#9ca3af;
+
+margin-bottom:40px;
+
+}
+
+.login-card,
+.form-card{
+
+background:rgba(15,23,42,.85);
+
+padding:30px;
+
+border-radius:20px;
+
+border:1px solid rgba(255,255,255,.08);
+
+margin-bottom:25px;
+
+}
+
+.login-card{
+
+max-width:500px;
+
+margin:auto;
+
+}
+
+.control-grid{
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(250px,1fr));
+
+gap:20px;
+
+margin-bottom:40px;
+
+}
+
+.control-card{
+
+background:rgba(15,23,42,.85);
+
+padding:30px;
+
+border-radius:20px;
+
+border:1px solid rgba(255,255,255,.08);
+
+cursor:pointer;
+
+transition:.3s;
+
+text-align:center;
+
+}
+
+.control-card:hover{
+
+transform:translateY(-5px);
+
+border-color:#58a6ff;
+
+}
+
+input,
+textarea{
+
+width:100%;
+
+padding:14px;
+
+margin-top:10px;
+
+margin-bottom:15px;
+
+background:#111827;
+
+color:white;
+
+border:1px solid rgba(255,255,255,.1);
+
+border-radius:12px;
+
+outline:none;
+
+box-sizing:border-box;
+
+}
+
+textarea{
+
+min-height:150px;
+
+resize:vertical;
+
+}
+
+button{
+
+padding:14px 20px;
+
+border:none;
+
+border-radius:12px;
+
+background:#58a6ff;
+
+color:white;
+
+font-weight:600;
+
+cursor:pointer;
+
+}
+
+@media(max-width:768px){
+
+.page-title{
+
+font-size:2rem;
+
+}
+
+.control-card{
+
+padding:20px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="control-wrapper">
+
+<h1 class="page-title">
+
+ Control Room
+
+</h1>
+
+<p class="page-subtitle">
+
+Manage Projects, Journals and Skills
+
+</p>
+
+<div
+id="loginBox"
+class="login-card">
+
+<h2>Access Required</h2>
+
+<input
+type="password"
+id="password"
+placeholder="Enter Password">
+
+<button onclick="checkLogin()">
+
+Access 
+
+</button>
+
+</div>
+
+<div
+id="dashboard"
+class="hidden">
+
+<div class="control-grid">
+
+<div
+class="control-card"
+onclick="showSection('projectForm')">
+
+
+<h2>Add Project</h2>
+
+
+</div>
+
+<div
+class="control-card"
+onclick="showSection('journalForm')">
+
+
+<h2>Add Journal</h2>
+
+
+</div>
+
+<div
+class="control-card"
+onclick="showSection('manageProjects')">
+
+
+<h2>Manage Projects</h2>
+
+
+
+</div>
+
+<div
+class="control-card"
+onclick="showSection('manageJournals')">
+
+
+<h2>Manage Journals</h2>
+
+
+</div>
+
+<div
+class="control-card"
+onclick="showSection('failureForm')">
+
+
+<h2>Failure Log</h2>
+
+</div>
+
+<div
+class="control-card"
+onclick="showSection('manageFailures')">
+
+
+<h3>Manage Failures</h3>
+
+</div>
+<div
+class="control-card"
+onclick="showSection('skillsForm')">
+
+
+<h2>Skills</h2>
+
+<p>Manage progress</p>
+
+</div>
+
+<div
+class="control-card"
+onclick="alert('Backup System Coming Soon')">
+
+<h2>💾</h2>
+
+<h3>Backup</h3>
+
+<p>Export & Import</p>
+
+</div>
+
+</div>
+
+<!-- PROJECT FORM -->
+
+<div
+id="projectForm"
+class="form-card hidden">
+
+<h2>🚀 Add Project</h2>
+
+<input
+id="projectTitle"
+placeholder="Project Title">
+
+<textarea
+id="projectDescription"
+placeholder="Project Description"></textarea>
+
+<input
+id="projectGithub"
+placeholder="GitHub Link">
+
+<button onclick="saveProject()">
+
+Save Project
+
+</button>
+
+</div>
+
+<!-- JOURNAL FORM -->
+
+<div
+id="journalForm"
+class="form-card hidden">
+
+<h2> Add Journal</h2>
+
+<input
+id="journalTitle"
+placeholder="Journal Title">
+
+<textarea
+id="journalContent"
+placeholder="Journal Content"></textarea>
+
+<button onclick="saveJournal()">
+
+Save Journal
+
+</button>
+
+</div>
+<!-- manege failure -->
+<div
+id="failureForm"
+class="form-card hidden">
+
+<h2> Add Failure Log</h2>
+
+<textarea
+id="failureMistake"
+placeholder="What mistake did you make?"></textarea>
+
+<textarea
+id="failureFix"
+placeholder="How did you fix it?"></textarea>
+
+<textarea
+id="failureLesson"
+placeholder="What lesson did you learn?"></textarea>
+
+<button onclick="saveFailure()">
+
+Save Failure
+
+</button>
+
+</div>
+<div
+id="manageFailures"
+class="form-card hidden">
+
+<h2> Manage Failures</h2>
+
+<div id="failureList"></div>
+
+</div>
+
+<div
+id="editFailureForm"
+class="form-card hidden">
+
+<h2>✏️ Edit Failure Log</h2>
+
+<input
+type="hidden"
+id="editFailureId">
+
+<textarea
+id="editFailureMistake"
+placeholder="Mistake"></textarea>
+
+<textarea
+id="editFailureFix"
+placeholder="Fix"></textarea>
+
+<textarea
+id="editFailureLesson"
+placeholder="Lesson"></textarea>
+
+<button onclick="updateFailure()">
+
+Save Changes
+
+</button>
+
+</div>
+
+<!-- MANAGE PROJECTS -->
+
+<div
+id="manageProjects"
+class="form-card hidden">
+
+<h2> Manage Projects</h2>
+
+<div id="projectList"></div>
+
+</div>
+
+<div
+id="editProjectForm"
+class="form-card hidden">
+
+<h2> Edit Project</h2>
+
+<input
+type="hidden"
+id="editProjectId">
+
+<input
+id="editProjectTitle"
+placeholder="Project Title">
+
+<textarea
+id="editProjectDescription"
+placeholder="Project Description"></textarea>
+
+<input
+id="editProjectGithub"
+placeholder="GitHub Link">
+
+<button onclick="updateProject()">
+
+Save Changes
+
+</button>
+
+</div>
+
+<!-- MANAGE JOURNALS -->
+
+<div
+id="manageJournals"
+class="form-card hidden">
+
+<h2> Manage Journals</h2>
+
+<div id="journalList"></div>
+
+</div>
+
+<div
+id="editJournalForm"
+class="form-card hidden">
+
+<h2> Edit Journal</h2>
+
+<input
+type="hidden"
+id="editJournalId">
+
+<input
+id="editJournalTitle"
+placeholder="Journal Title">
+
+<textarea
+id="editJournalContent"
+placeholder="Journal Content"></textarea>
+
+<button onclick="updateJournal()">
+
+Save Changes
+
+</button>
+
+</div>
+<!-- MANEGE SKILLS -->
+<div
+id="skillsForm"
+class="form-card hidden">
+
+<h2>📊 Skills Manager</h2>
+
+<label>Linux (%)</label>
+<input
+type="number"
+id="linuxSkill"
+min="0"
+max="100">
+
+<label>Python (%)</label>
+<input
+type="number"
+id="pythonSkill"
+min="0"
+max="100">
+
+<label>Cybersecurity (%)</label>
+<input
+type="number"
+id="cyberSkill"
+min="0"
+max="100">
+
+<label>Networking (%)</label>
+<input
+type="number"
+id="networkSkill"
+min="0"
+max="100">
+
+<label>Cloud (%)</label>
+<input
+type="number"
+id="cloudSkill"
+min="0"
+max="100">
+
+<button onclick="saveSkillsManager()">
+
+Save Skills
+
+</button>
+
+</div>
+</div>
+
+</div>
+
+<script src="auth.js"></script>
+
+<script src="storage.js"></script>
+
+<script src="control-room.js"></script>
+
+</body>
+</html>
