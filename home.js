@@ -1,4 +1,4 @@
-alert("HOME JS LOADED");
+
 // ====================
 // MOBILE MENU
 // ====================
@@ -215,37 +215,15 @@ skills[key] + "%";
 // START
 // ====================
 async function loadSkillsFromSupabase(){
-  alert("FUNCTION STARTED");
 
 try{
 
-const result = await supabase
-.from("skills")
-.select("*");
-
-alert("QUERY FINISHED");
-
-alert(JSON.stringify(result));
-
-}catch(err){
-
-alert("CATCH ERROR");
-
-alert(err.message);
-
-}
-alert(typeof supabase);
-  alert("FUNCTION STARTED");
-alert("Before Query");
-
-const result =
+const { data, error } =
 await supabase
 .from("skills")
-.select("*");
-
-alert("After Query");
-
-alert(JSON.stringify(result));
+.select("*")
+.limit(1)
+.single();
 
 if(error){
 
@@ -254,9 +232,6 @@ alert("ERROR: " + error.message);
 return;
 
 }
-
-alert("SUCCESS");
-alert(JSON.stringify(data));
 
 const skills = {
 
@@ -270,16 +245,16 @@ cloud: data.cloud
 
 const map = {
 
-linux:".linux",
-python:".python",
-cybersecurity:".cyber",
-networking:".network",
-cloud:".cloud"
+linux: ".linux",
+python: ".python",
+cybersecurity: ".cyber",
+networking: ".network",
+cloud: ".cloud"
 
 };
 
 Object.entries(map)
-.forEach(([key,selector])=>{
+.forEach(([key, selector]) => {
 
 const bar =
 document.querySelector(selector);
@@ -295,16 +270,16 @@ skills[key] + "%";
 
 const percentMap = {
 
-linux:"linuxPercent",
-python:"pythonPercent",
-cybersecurity:"cyberPercent",
-networking:"networkPercent",
-cloud:"cloudPercent"
+linux: "linuxPercent",
+python: "pythonPercent",
+cybersecurity: "cyberPercent",
+networking: "networkPercent",
+cloud: "cloudPercent"
 
 };
 
 Object.keys(percentMap)
-.forEach(key=>{
+.forEach(key => {
 
 const el =
 document.getElementById(
@@ -319,6 +294,12 @@ skills[key] + "%";
 }
 
 });
+
+}catch(err){
+
+alert(err.message);
+
+}
 
 }
 
