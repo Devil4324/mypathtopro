@@ -215,13 +215,18 @@ skills[key] + "%";
 // START
 // ====================
 async function loadSkillsFromSupabase(){
-alert("FUNCTION STARTED");
-const { data, error } =
+alert(typeof supabase);
+  alert("FUNCTION STARTED");
+alert("Before Query");
+
+const result =
 await supabase
 .from("skills")
-.select("*")
-.limit(1)
-.single();
+.select("*");
+
+alert("After Query");
+
+alert(JSON.stringify(result));
 
 if(error){
 
