@@ -9,4 +9,8 @@ window.supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
 );
+console.log(supabase);
+alert(typeof supabase.from);
 alert("Supabase JS Loaded");
+alert(typeof window.supabase);
+alert(Object.keys(window.supabase));
