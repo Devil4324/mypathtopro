@@ -1,3 +1,4 @@
+alert("HOME JS LOADED");
 // ====================
 // MOBILE MENU
 // ====================
@@ -214,7 +215,7 @@ skills[key] + "%";
 // START
 // ====================
 async function loadSkillsFromSupabase(){
-
+alert("FUNCTION STARTED");
 const { data, error } =
 await supabase
 .from("skills")
